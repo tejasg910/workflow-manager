@@ -2,6 +2,13 @@ import React, { useEffect } from "react";
 import Modal from "./Modal";
 const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask }) => {
   const [taskText, setTaskText] = React.useState("");
+
+
+  const handleKeyDown = (e) => {
+    if (e.code === 'Space') {
+      e.stopPropagation(); // Stop space from triggering add modal
+    }
+  };
   useEffect(() => {
     setTaskText(initialTask)
   }, [initialTask])
@@ -22,6 +29,7 @@ const EditTaskModal = ({ isOpen, onClose, onSubmit, initialTask }) => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
+            onKeyDown={handleKeyDown}
             type="text"
             value={taskText}
             onChange={(e) => setTaskText(e.target.value)}

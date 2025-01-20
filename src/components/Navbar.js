@@ -19,10 +19,10 @@ const Navbar = () => {
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-8">
                         <Moon className="text-white w-5 h-5" />
-                        <a href="#" className="text-white hover:text-gray-300">Workspaces</a>
-                        <a href="#" className="text-white hover:text-gray-300">About</a>
-                        <a href="#" className="text-white hover:text-gray-300">Pricing</a>
-                        <a href="#" className="text-white hover:text-gray-300">Feedback</a>
+                        <a href="/" className="text-white hover:text-gray-300">Workspaces</a>
+                        <a href="/" className="text-white hover:text-gray-300">About</a>
+                        <a href="/" className="text-white hover:text-gray-300">Pricing</a>
+                        <a href="/" className="text-white hover:text-gray-300">Feedback</a>
                         <button className=" text-white hover:text-gray-300 ">
                             Login
                         </button>
@@ -43,10 +43,10 @@ const Navbar = () => {
                 {isOpen && (
                     <div className="lg:hidden mt-4 pb-4">
                         <div className="flex flex-col space-y-4">
-                            <a href="#" className="text-white hover:text-gray-300">Workspaces</a>
-                            <a href="#" className="text-white hover:text-gray-300">About</a>
-                            <a href="#" className="text-white hover:text-gray-300">Pricing</a>
-                            <a href="#" className="text-white hover:text-gray-300">Feedback</a>
+                            <a href="/" className="text-white hover:text-gray-300">Workspaces</a>
+                            <a href="/" className="text-white hover:text-gray-300">About</a>
+                            <a href="/" className="text-white hover:text-gray-300">Pricing</a>
+                            <a href="/" className="text-white hover:text-gray-300">Feedback</a>
                             <button className=" text-white px-4 py-1.5 rounded hover:bg-gray-100 w-full">
                                 Login
                             </button>

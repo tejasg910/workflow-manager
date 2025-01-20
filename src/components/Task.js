@@ -1,5 +1,5 @@
 import { PenSquare, Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
+import React from 'react';
 import { useDrag } from 'react-dnd';
 
 const Task = ({ task, onDelete, onComplete,  priority, onUpdateTask }) => {
