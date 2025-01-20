@@ -18,7 +18,6 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center space-x-8">
-                        <Moon className="text-white w-5 h-5" />
                         <a href="/" className="text-white hover:text-gray-300">Workspaces</a>
                         <a href="/" className="text-white hover:text-gray-300">About</a>
                         <a href="/" className="text-white hover:text-gray-300">Pricing</a>
