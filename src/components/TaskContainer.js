@@ -1,4 +1,3 @@
-// TaskContainer.jsx
 import React, { useRef, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import Task from './Task';
@@ -17,13 +16,19 @@ const TaskContainer = ({ title, priority, tasks, onTaskMove, onTaskDelete, onTas
             const mouseY = monitor.getClientOffset()?.y || 0;
             const tasks = Array.from(container.querySelectorAll('.task-item:not(.dragging)'));
 
-            // Apply transitions to all tasks
+            // Reset positions first
             tasks.forEach(task => {
                 task.style.transition = 'transform 0.3s ease';
+                task.style.transform = '';
             });
 
-            // Find target position
+            // Find target position and dragged item index
             let targetIndex = tasks.length;
+            const draggedIndex = tasks.findIndex(
+                task => task.dataset.taskid === draggedItem.id
+            );
+
+            // Calculate target index based on mouse position
             for (let i = 0; i < tasks.length; i++) {
                 const task = tasks[i];
                 const rect = task.getBoundingClientRect();
@@ -35,14 +40,29 @@ const TaskContainer = ({ title, priority, tasks, onTaskMove, onTaskDelete, onTas
                 }
             }
 
-            // Move tasks to make space
-            if (targetIndex < tasks.length) {
-                const targetTask = tasks[targetIndex];
-                const taskHeight = targetTask.offsetHeight + 8; // Adding gap
+            // Skip if dragging over itself
+            if (draggedIndex === targetIndex) {
+                return;
+            }
 
-                for (let i = targetIndex; i < tasks.length; i++) {
+            const taskHeight = tasks[0]?.offsetHeight + 8; // Height + gap
+
+            // Move tasks based on drag direction
+            if (draggedIndex < targetIndex) {
+                // Moving downward
+                for (let i = 0; i < tasks.length; i++) {
                     const task = tasks[i];
-                    task.style.transform = `translateY(${taskHeight}px)`;
+                    if (i >= draggedIndex && i < targetIndex) {
+                        task.style.transform = `translateY(-${taskHeight}px)`;
+                    }
+                }
+            } else {
+                // Moving upward
+                for (let i = 0; i < tasks.length; i++) {
+                    const task = tasks[i];
+                    if (i >= targetIndex && i < draggedIndex) {
+                        task.style.transform = `translateY(${taskHeight}px)`;
+                    }
                 }
             }
         },
