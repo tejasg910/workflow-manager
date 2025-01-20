@@ -1,5 +1,3 @@
-
-
 import { PenSquare, Trash2 } from 'lucide-react';
 import React, { useRef, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
@@ -16,25 +14,20 @@ const Task = ({ task, index, onDelete, onComplete, priority, onUpdateTask }) => 
             priority: priority
         }),
         collect: (monitor) => ({
-            isDragging: monitor.isDragging()
-        })
+            isDragging: !!monitor.isDragging()
+        }),
+        options: {
+            dropEffect: 'move'
+        }
     });
 
-    // Handle animation and spacing during drag
+    // Remove the height/opacity animations during drag
     useEffect(() => {
         if (!ref.current) return;
-
+        
         if (isDragging) {
-            // When dragging starts, collapse the space immediately
-            ref.current.style.height = '0';
-            ref.current.style.padding = '0';
-            ref.current.style.margin = '0';
-            ref.current.style.opacity = '0';
+            ref.current.style.opacity = '0.5'; // Just make it semi-transparent
         } else {
-            // When dragging ends, restore the original dimensions
-            ref.current.style.height = 'auto';
-            ref.current.style.padding = '0.75rem';
-            ref.current.style.margin = '';
             ref.current.style.opacity = task.completed ? '0.5' : '1';
         }
     }, [isDragging, task.completed]);
@@ -45,14 +38,17 @@ const Task = ({ task, index, onDelete, onComplete, priority, onUpdateTask }) => 
         <div
             ref={ref}
             data-taskid={task.id}
-            className={`task-item transition-all duration-200 ${
+            className={`task-item transition-opacity duration-200 ${
                 priority === "do_first" ? "bg-do-first" :
                 priority === "do_later" ? "bg-do-later" :
                 priority === "delegate" ? "bg-delegate" :
                 "bg-eliminate"
             } p-3 rounded flex items-center cursor-pointer justify-between ${
                 task.completed ? 'opacity-50' : ''
-            } ${isDragging ? 'dragging' : ''}`}
+            } ${isDragging ? 'opacity-50' : ''}`}
+            style={{
+                opacity: isDragging ? 0.5 : task.completed ? 0.5 : 1
+            }}
         >
             <div className="flex items-center space-x-3">
                 <div className="inline-flex items-center">
