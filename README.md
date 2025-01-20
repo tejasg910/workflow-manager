@@ -20,8 +20,9 @@ cd workflow-manager
 npm i --legacy-peer-deps
 ```
 Note: We use \`--legacy-peer-deps\` flag to handle any potential dependency conflicts.
+
 4. Start the development server:
 ```bash
 npm start
 ```
-The application should now be running on `http://localhost:3000
+The application should now be running on http://localhost:3000
