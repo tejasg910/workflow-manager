@@ -1,3 +1,4 @@
+// Task.jsx
 import { PenSquare, Trash2 } from 'lucide-react';
 import React, { useRef, useEffect } from 'react';
 import { useDrag } from 'react-dnd';
@@ -18,36 +19,34 @@ const Task = ({ task, index, onDelete, onComplete, priority, onUpdateTask }) => 
         }),
         options: {
             dropEffect: 'move'
+        },
+        end: (item, monitor) => {
+            // If the drop wasn't successful, trigger a return animation
+            if (!monitor.didDrop()) {
+                if (ref.current) {
+                    ref.current.style.transform = '';
+                }
+            }
         }
     });
 
-    // Remove the height/opacity animations during drag
-    useEffect(() => {
-        if (!ref.current) return;
-        
-        if (isDragging) {
-            ref.current.style.opacity = '0.5'; // Just make it semi-transparent
-        } else {
-            ref.current.style.opacity = task.completed ? '0.5' : '1';
-        }
-    }, [isDragging, task.completed]);
-
-    drag(ref);
-
+    // Use a transform for smoother animations
     return (
         <div
-            ref={ref}
+            ref={drag(ref)}
             data-taskid={task.id}
-            className={`task-item transition-opacity duration-200 ${
+            className={`task-item transform transition-all duration-300  ease-in-out ${
                 priority === "do_first" ? "bg-do-first" :
                 priority === "do_later" ? "bg-do-later" :
                 priority === "delegate" ? "bg-delegate" :
                 "bg-eliminate"
             } p-3 rounded flex items-center cursor-pointer justify-between ${
                 task.completed ? 'opacity-50' : ''
-            } ${isDragging ? 'opacity-50' : ''}`}
+            } ${isDragging ? 'opacity-50 scale-105 shadow-lg' : ''}`}
             style={{
-                opacity: isDragging ? 0.5 : task.completed ? 0.5 : 1
+                opacity: isDragging ? 0.5 : task.completed ? 0.5 : 1,
+                position: 'relative',
+                zIndex: isDragging ? 1000 : 1
             }}
         >
             <div className="flex items-center space-x-3">
@@ -89,3 +88,4 @@ const Task = ({ task, index, onDelete, onComplete, priority, onUpdateTask }) => 
 };
 
 export default Task;
+
