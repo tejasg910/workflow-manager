@@ -47,22 +47,11 @@ const TaskContainer = ({ title, priority, tasks, onTaskMove, onTaskDelete, onTas
 
             const taskHeight = tasks[0]?.offsetHeight + 8; // Height + gap
 
-            // Move tasks based on drag direction
-            if (draggedIndex < targetIndex) {
-                // Moving downward
-                for (let i = 0; i < tasks.length; i++) {
-                    const task = tasks[i];
-                    if (i >= draggedIndex && i < targetIndex) {
-                        task.style.transform = `translateY(-${taskHeight}px)`;
-                    }
-                }
-            } else {
-                // Moving upward
-                for (let i = 0; i < tasks.length; i++) {
-                    const task = tasks[i];
-                    if (i >= targetIndex && i < draggedIndex) {
-                        task.style.transform = `translateY(${taskHeight}px)`;
-                    }
+            // Move tasks downwards when hovering
+            for (let i = 0; i < tasks.length; i++) {
+                const task = tasks[i];
+                if (i >= targetIndex && i !== draggedIndex) {
+                    task.style.transform = `translateY(${taskHeight}px)`;
                 }
             }
         },
@@ -122,8 +111,8 @@ const TaskContainer = ({ title, priority, tasks, onTaskMove, onTaskDelete, onTas
                         priority === "delegate" ? "text-delegate-text" :
                             "text-eliminate-text"
                 }`}>{title}</h2>
-            <div className="flex-1 overflow-y-auto min-h-0">
-                <div className="flex flex-col gap-2 overflow-hidden">
+            <div className="flex-1 overflow-y-auto min-h-0 overflow-hidden">
+                <div className="flex flex-col gap-2 ">
                     {tasks
                         .sort((a, b) => a.order - b.order)
                         .map((task, index) => (
